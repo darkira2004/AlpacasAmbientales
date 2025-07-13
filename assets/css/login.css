@@ -3,9 +3,9 @@
  * Sistema de Gestión Ambiental - Temática Popeyes
  */
 
-/* Layout principal con colores de Popeyes */
+/* Layout principal con colores anaranjados claros */
 body {
-    background: linear-gradient(135deg, #FF6900 0%, #DC2626 50%, #FFB800 100%);
+    background: linear-gradient(135deg, #fed7aa 0%, #fbbf24 50%, #fb923c 100%);
     min-height: 100vh;
     position: relative;
 }
@@ -19,9 +19,9 @@ body::before {
     right: 0;
     bottom: 0;
     background-image: 
-        radial-gradient(circle at 20% 20%, rgba(255, 184, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(255, 105, 0, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 20%, rgba(251, 146, 60, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(254, 215, 170, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -50,7 +50,7 @@ body::before {
     left: 0;
     right: 0;
     height: 6px;
-    background: linear-gradient(90deg, #FF6900 0%, #FFB800 50%, #DC2626 100%);
+    background: linear-gradient(90deg, #fb923c 0%, #fbbf24 50%, #fed7aa 100%);
 }
 
 /* Logo */
@@ -71,7 +71,7 @@ body::before {
 
 /* Títulos */
 .login-title {
-    color: #DC2626 !important;
+    color: #c2410c !important;
     font-weight: 700;
     margin-bottom: 0.5rem;
     font-size: 1.75rem;
@@ -79,14 +79,14 @@ body::before {
 }
 
 .login-subtitle {
-    color: #FF6900 !important;
+    color: #ea580c !important;
     font-size: 0.95rem;
     margin-bottom: 2rem;
     line-height: 1.4;
     font-weight: 500;
 }
 
-/* Botón de login con estilo Popeyes */
+/* Botón de login con estilo anaranjado claro */
 .btn-login {
     height: 52px !important;
     min-height: 52px !important;
@@ -94,7 +94,7 @@ body::before {
     font-weight: 700 !important;
     letter-spacing: 0.5px;
     border-radius: 12px !important;
-    background: linear-gradient(135deg, #FF6900 0%, #DC2626 100%) !important;
+    background: linear-gradient(135deg, #fb923c 0%, #c2410c 100%) !important;
     border: none !important;
     color: #FFFFFF !important;
     text-transform: uppercase;
@@ -125,8 +125,8 @@ body::before {
 
 .btn-login:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4) !important;
-    background: linear-gradient(135deg, #E55A00 0%, #B91C1C 100%) !important;
+    box-shadow: 0 8px 20px rgba(251, 146, 60, 0.4) !important;
+    background: linear-gradient(135deg, #f97316 0%, #9a3412 100%) !important;
 }
 
 .btn-login:hover::before {
@@ -135,8 +135,8 @@ body::before {
 
 .btn-login:active {
     transform: translateY(0) !important;
-    background: linear-gradient(135deg, #d14500 0%, #991b1b 100%) !important;
-    box-shadow: 0 2px 8px rgba(255, 105, 0, 0.3) !important;
+    background: linear-gradient(135deg, #ea580c 0%, #7c2d12 100%) !important;
+    box-shadow: 0 2px 8px rgba(251, 146, 60, 0.3) !important;
 }
 
 .btn-login:disabled {
@@ -148,16 +148,16 @@ body::before {
 }
 
 .btn-login:focus {
-    outline: 2px solid #FFB800 !important;
+    outline: 2px solid #fbbf24 !important;
     outline-offset: 2px !important;
 }
 
-/* Formularios flotantes con temática Popeyes */
+/* Formularios flotantes con anaranjados claros */
 .form-floating .form-control {
     height: 48px !important;
     padding-top: 1.2rem;
     border-radius: 8px;
-    border: 2px solid #FFB800;
+    border: 2px solid #fbbf24;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     background: #FEFEFE;
     color: #1a1a1a !important;
@@ -169,8 +169,8 @@ body::before {
 }
 
 .form-floating .form-control:focus {
-    border-color: #FF6900;
-    box-shadow: 0 0 0 0.3rem rgba(255, 105, 0, 0.25);
+    border-color: #fb923c;
+    box-shadow: 0 0 0 0.3rem rgba(251, 146, 60, 0.25);
     background: #FFFFFF;
     color: #1a1a1a !important;
     height: 48px !important;

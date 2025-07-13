@@ -1,0 +1,73 @@
+<!-- Modal para mostrar perfil del usuario -->
+<div id="profile-modal" class="admin-profile-modal">
+    <div class="admin-profile-content">
+        <h2>
+            Mi Perfil
+            <span class="close-modal" id="close-profile-modal">&times;</span>
+        </h2>
+        
+        <!-- Contenido del modal -->
+        <div class="admin-profile-details">
+            <!-- Perfil del usuario -->
+            <div class="admin-profile-header">
+                <div class="avatar-upload-container">
+                    <!-- Avatar principal -->
+                    <img class="avatar avatar-xl" id="profile-modal-avatar" alt="Foto de perfil" />
+                    
+                    <!-- Input oculto para seleccionar archivo -->
+                    <input type="file" id="photo-input" accept="image/*" style="display: none;" />
+                    
+                    <!-- Botón de upload que aparece en hover -->
+                    <button type="button" class="btn btn-primary btn-sm avatar-upload-btn" id="change-photo-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                            <path d="M7 9l5 -5l5 5" />
+                            <path d="M12 4l0 12" />
+                        </svg>
+                        Cambiar
+                    </button>
+                </div>
+                
+                <div class="admin-profile-header-info">
+                    <h3 id="profile-modal-name">Nombre del Usuario</h3>
+                </div>
+            </div>
+            
+            <!-- Información detallada del usuario -->
+            <div class="admin-profile-info">
+                <div class="info-item">
+                    <label>Nombre:</label>
+                    <span id="profile-modal-firstname">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Apellido:</label>
+                    <span id="profile-modal-lastname">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Tipo de Documento:</label>
+                    <span id="profile-modal-doctype">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Documento:</label>
+                    <span id="profile-modal-document">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Área:</label>
+                    <span id="profile-modal-area">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Cargo:</label>
+                    <span id="profile-modal-position">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Correo Electrónico:</label>
+                    <span id="profile-modal-email">No disponible</span>
+                </div>
+                <div class="info-item">
+                    <label>Celular:</label>
+                    <span id="profile-modal-phone">No disponible</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

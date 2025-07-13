@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Estadísticas Ambientales - Sistema de Gestión Ambiental</title>
+    <!-- CSS files -->
+    <link href="../assets/tabler/css/tabler.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/demo.min.css" rel="stylesheet"/>
+    <!-- Estilos personalizados -->
+    <link href="../assets/css/topbar.css" rel="stylesheet"/>
+    <link href="../assets/css/sidebar.css" rel="stylesheet"/>
+    <link href="../assets/css/dashboard.css" rel="stylesheet"/>
+    
+    <style>
+        .environmental-metric {
+            transition: all 0.3s ease;
+        }
+        .environmental-metric:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            position: relative;
+            min-height: 250px;
+        }
+        .impact-badge {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        /* Personalización de ApexCharts data labels */
+        .apexcharts-datalabel {
+            fill: white !important;
+            font-weight: 600 !important;
+        }
+        
+        .apexcharts-datalabel-label {
+            fill: white !important;
+        }
+        
+        .apexcharts-datalabel-value {
+            fill: white !important;
+        }
+        
+        /* Para gráficos de dona/pie */
+        .apexcharts-pie-label {
+            fill: white !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Sidebar -->
+        <div id="sidebar-container"></div>
+
+        <!-- Wrapper -->
+        <div class="page-wrapper">
+            <!-- Topbar -->
+            <div id="topbar-container"></div>
+            
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl">
+                    <!-- Page header -->
+                    <div class="page-header d-print-none mb-4">
+                        <div class="container-xl">
+                            <div class="row g-2 align-items-center">
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <div class="text-muted mt-1">Análisis detallado del impacto ambiental y sostenibilidad</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto ms-auto d-print-none">
+                                    <div class="btn-list">
+                                        <!-- Selector de período -->
+                                        <select class="form-select" id="period-selector" style="width: auto;">
+                                            <option value="7">Últimos 7 días</option>
+                                            <option value="30" selected>Últimos 30 días</option>
+                                            <option value="90">Últimos 90 días</option>
+                                            <option value="365">Último año</option>
+                                        </select>
+                                        
+                                        <!-- Botón de Equivalencias -->
+                                        <button class="btn btn-outline-success" id="show-equivalences" title="Ver Equivalencias e Impacto">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                                                <path d="M12 9h.01"/>
+                                                <path d="M11 12h1v4h1"/>
+                                            </svg>
+                                            Equivalencias
+                                        </button>
+                                                          <!-- Botón de Logros -->
+                        <button class="btn btn-outline-warning" id="show-achievements" title="Ver Logros Ambientales">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/>
+                                <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/>
+                                <path d="M6.802 12.396l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/>
+                            </svg>
+                            Logros
+                        </button>
+                        
+                        <!-- Botón de Objetivos -->
+                        <button class="btn btn-outline-info" id="show-goals" title="Ver Objetivos Ambientales">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-target" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+                                <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>
+                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                            </svg>
+                            Objetivos
+                        </button>
+                                        
+                                        <button class="btn btn-outline-primary" id="compare-periods" title="Comparar Períodos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-line" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M4 19l16 0"/>
+                                                <path d="M4 15l4 -6l4 2l4 -5l4 4"/>
+                                            </svg>
+                                            Comparar
+                                        </button>
+                                        
+                                        <button class="btn btn-primary" id="refresh-environmental-stats" title="Actualizar Datos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                                                <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de métricas ambientales -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            <div id="environmental-overview-cards"></div>
+                        </div>
+                    </div>
+
+                    <!-- Primera fila de gráficos - 2 gráficos por fila -->
+                    <div class="row g-4 mb-4">
+                        <!-- Impacto de Carbono -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-leaf me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                            <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                        </svg>
+                                        Reducción de CO2
+                                    </h3>
+                                    <div class="card-actions">
+                                        <span class="impact-badge">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                                <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                            </svg>
+                                            Impacto Positivo
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div id="carbon-impact-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Impacto de Sostenibilidad -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-recycle me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M12 17l-2 2l2 2"/>
+                                            <path d="M10 19h9a2 2 0 0 0 1.8 -2.8l-1 -1.8a2 2 0 0 0 -1.8 -1.2h-6.5"/>
+                                            <path d="M17 10l2 -2l-2 -2"/>
+                                            <path d="M19 8h-8.5a2 2 0 0 0 -1.8 1.2l-1 1.8"/>
+                                            <path d="M7.5 15.5l-1.8 -1.8a2 2 0 0 1 0 -2.4l1 -1.8a2 2 0 0 1 1.8 -1.2h4.5"/>
+                                        </svg>
+                                        Impacto de Sostenibilidad
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="waste-processing-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Segunda fila de gráficos - 2 gráficos por fila -->
+                    <div class="row g-4 mb-4">
+                        <!-- Energía y Agua -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bolt me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M13 3v7h6l-8 11v-7h-6l8 -11"/>
+                                        </svg>
+                                        Energía y Agua Conservadas
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="energy-water-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tendencias y análisis -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trending-up me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M3 17l6 -6l4 4l8 -8"/>
+                                            <path d="M14 7l7 0l0 7"/>
+                                        </svg>
+                                        Tendencias de Impacto Ambiental
+                                    </h3>
+                                    <div class="card-actions">
+                                        <div class="dropdown">
+                                            <a href="#" class="btn-action dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <circle cx="12" cy="12" r="1"/>
+                                                    <circle cx="12" cy="19" r="1"/>
+                                                    <circle cx="12" cy="5" r="1"/>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                                                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
+                                                    </svg>
+                                                    Exportar reporte
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                        <path d="M12 17.75l-6.172 -3.245l-.828 .464l7 4.085l7 -4.085l-.828 -.464z"/>
+                                                        <path d="M12 14.25l-6.172 -3.245l-.828 .464l7 4.085l7 -4.085l-.828 -.464z"/>
+                                                        <path d="M12 10.75l-6.172 -3.245l-.828 .464l7 4.085l7 -4.085l-.828 -.464z"/>
+                                                    </svg>
+                                                    Ver detalles
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div id="trends-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Las secciones de Equivalencias e Impacto y Logros ahora están en modales -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Equivalencias e Impacto -->
+    <div class="modal fade" id="equivalences-modal" tabindex="-1" aria-labelledby="equivalencesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #17a2b8 !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" id="equivalencesModalLabel" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                            <path d="M12 9h.01"/>
+                            <path d="M11 12h1v4h1"/>
+                        </svg>
+                        Equivalencias e Impacto Ambiental
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center h-100">
+                                <div>
+                                    <h4 class="text-muted mb-3">Comprende tu impacto</h4>
+                                    <p class="fs-4 mb-0">Visualiza el impacto de tus acciones ambientales a través de estas equivalencias tangibles y comprensibles.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="card border-success">
+                                        <div class="card-body text-center py-3">
+                                            <div class="avatar bg-success text-white mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                                    <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                                </svg>
+                                            </div>
+                                            <h5 class="card-title text-success mb-1">CO2 Evitado</h5>
+                                            <p class="card-text small mb-1">Tu reducción equivale a:</p>
+                                            <div class="h4 text-success mb-0" id="trees-equivalent">45 árboles</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card border-primary">
+                                        <div class="card-body text-center py-3">
+                                            <div class="avatar bg-primary text-white mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M3 21l18 0"/>
+                                                    <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/>
+                                                    <path d="M9 9l0 .01"/>
+                                                    <path d="M15 9l0 .01"/>
+                                                    <path d="M10 12l4 0"/>
+                                                    <path d="M10 15l4 0"/>
+                                                    <path d="M10 18l4 0"/>
+                                                </svg>
+                                            </div>
+                                            <h5 class="card-title text-primary mb-1">Energía Ahorrada</h5>
+                                            <p class="card-text small mb-1">Tu ahorro equivale a:</p>
+                                            <div class="h4 text-primary mb-0" id="homes-powered">12 hogares/día</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card border-warning">
+                                        <div class="card-body text-center py-3">
+                                            <div class="avatar bg-warning text-white mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                                                    <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                                                    <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2"/>
+                                                    <path d="M16 5l1.5 7h4.5"/>
+                                                    <path d="M2 10h15m-8 0v-5"/>
+                                                    <path d="M6 4v5"/>
+                                                    <path d="M12 4v5"/>
+                                                </svg>
+                                            </div>
+                                            <h5 class="card-title text-warning mb-1">Impacto Total</h5>
+                                            <p class="card-text small mb-1">Tu impacto equivale a:</p>
+                                            <div class="h4 text-warning mb-0" id="cars-off-road">3 autos menos</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card border-info">
+                                        <div class="card-body text-center py-3">
+                                            <div class="avatar bg-info text-white mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"/>
+                                                </svg>
+                                            </div>
+                                            <h5 class="card-title text-info mb-1">Agua Conservada</h5>
+                                            <p class="card-text small mb-1">Tu conservación equivale a:</p>
+                                            <div class="h4 text-info mb-0" id="water-bottles-saved">5,670 botellas</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Logros Ambientales -->
+    <div class="modal modal-blur fade" id="achievements-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-height: 90vh;">
+                <div class="modal-header" style="background-color: #28a745 !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/>
+                            <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/>
+                            <path d="M6.802 12.396l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/>
+                        </svg>
+                        Logros Ambientales
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 120px);">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-target me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+                                            <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>
+                                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                                        </svg>
+                                        Meta de Reducción de CO2
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="avatar avatar-lg bg-success text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                                    <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <strong>Progreso Actual</strong>
+                                                        <div class="text-muted small" id="co2-current-progress">1,250 kg de CO2 reducidos</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <strong>Meta Objetivo</strong>
+                                                        <div class="text-muted small" id="co2-goal-target">2,000 kg de CO2</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="progress progress-md mt-2">
+                                                <div class="progress-bar bg-success" id="co2-progress-bar" style="width: 62.5%" role="progressbar"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1">
+                                                <small class="text-muted">0</small>
+                                                <span class="badge bg-success text-white" id="co2-progress-percentage">62.5%</span>
+                                                <small class="text-muted" id="co2-goal-text">2,000 kg</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="text-muted small">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/>
+                                                <path d="M16 3v4"/>
+                                                <path d="M8 3v4"/>
+                                                <path d="M4 11h16"/>
+                                            </svg>
+                                            Fecha estimada de cumplimiento: <span id="estimated-completion">15 de agosto de 2025</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="card bg-success-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-success text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                            <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h2 m-0" id="trees-equiv-count">45</div>
+                                    <div class="text-muted">Árboles Equivalentes</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-primary-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-primary text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M12 17.75l-6.172 -3.245l-.828 .464l7 4.085l7 -4.085l-.828 -.464z"/>
+                                            <path d="M12 14.25l-6.172 -3.245l-.828 .464l7 4.085l7 -4.085l-.828 -.464z"/>
+                                            <path d="M12 10.75l-6.172 -3.245l-.828 .464l7 4.085l7 -4.085l-.828 -.464z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h2 m-0" id="sustainability-score">78</div>
+                                    <div class="text-muted">Puntuación Sostenibilidad</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-info text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M3 21l18 0"/>
+                                            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/>
+                                            <path d="M9 9l0 .01"/>
+                                            <path d="M15 9l0 .01"/>
+                                            <path d="M10 12l4 0"/>
+                                            <path d="M10 15l4 0"/>
+                                            <path d="M10 18l4 0"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h2 m-0" id="homes-powered-count">12</div>
+                                    <div class="text-muted">Hogares Alimentados</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Objetivos Ambientales -->
+    <div class="modal modal-blur fade" id="goals-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-height: 90vh;">
+                <div class="modal-header" style="background-color: #17a2b8 !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-target me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+                            <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>
+                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                        </svg>
+                        Objetivos Ambientales
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 120px);">
+                    <!-- Objetivo Principal -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            <div class="card border-info">
+                                <div class="card-header bg-info-lt">
+                                    <h5 class="card-title mb-0 text-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-leaf me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                            <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                        </svg>
+                                        Reducción de CO2 - 2025
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="avatar avatar-lg bg-info text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+                                                    <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>
+                                                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <strong>Progreso Actual</strong>
+                                                        <div class="text-muted small">1,250 kg de CO2 reducidos</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <strong>Meta Objetivo</strong>
+                                                        <div class="text-muted small">2,000 kg de CO2</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="progress progress-md mt-2">
+                                                <div class="progress-bar bg-info" style="width: 62.5%" role="progressbar"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1">
+                                                <small class="text-muted">0</small>
+                                                <span class="badge bg-info text-white">62.5%</span>
+                                                <small class="text-muted">2,000 kg</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="text-muted small">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/>
+                                                <path d="M16 3v4"/>
+                                                <path d="M8 3v4"/>
+                                                <path d="M4 11h16"/>
+                                            </svg>
+                                            Fecha estimada de cumplimiento: 15 de agosto de 2025
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Objetivos Secundarios -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card bg-success-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-success text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M12 17l-2 2l2 2"/>
+                                            <path d="M10 19h9a2 2 0 0 0 1.8 -2.8l-1 -1.8a2 2 0 0 0 -1.8 -1.2h-6.5"/>
+                                            <path d="M17 10l2 -2l-2 -2"/>
+                                            <path d="M19 8h-8.5a2 2 0 0 0 -1.8 1.2l-1 1.8"/>
+                                            <path d="M7.5 15.5l-1.8 -1.8a2 2 0 0 1 0 -2.4l1 -1.8a2 2 0 0 1 1.8 -1.2h4.5"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h3 m-0">85%</div>
+                                    <div class="text-muted">Reciclaje de Residuos</div>
+                                    <div class="progress progress-sm mt-2">
+                                        <div class="progress-bar bg-success" style="width: 75%" role="progressbar"></div>
+                                    </div>
+                                    <small class="text-muted">75% completado</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-warning-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-warning text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M13 3v7h6l-8 11v-7h-6l8 -11"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h3 m-0">30%</div>
+                                    <div class="text-muted">Ahorro Energético</div>
+                                    <div class="progress progress-sm mt-2">
+                                        <div class="progress-bar bg-warning" style="width: 45%" role="progressbar"></div>
+                                    </div>
+                                    <small class="text-muted">45% completado</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-primary-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-primary text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h3 m-0">15%</div>
+                                    <div class="text-muted">Conservación de Agua</div>
+                                    <div class="progress progress-sm mt-2">
+                                        <div class="progress-bar bg-primary" style="width: 60%" role="progressbar"></div>
+                                    </div>
+                                    <small class="text-muted">60% completado</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-teal-lt text-center">
+                                <div class="card-body py-4">
+                                    <div class="avatar avatar-lg bg-teal text-white mb-3 mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                            <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="h3 m-0">50</div>
+                                    <div class="text-muted">Árboles Plantados</div>
+                                    <div class="progress progress-sm mt-2">
+                                        <div class="progress-bar bg-teal" style="width: 80%" role="progressbar"></div>
+                                    </div>
+                                    <small class="text-muted">80% completado</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Comparación de Períodos -->
+    <div class="modal modal-blur fade" id="compare-periods-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-height: 90vh;">
+                <div class="modal-header" style="background-color: #007bff !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-line me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M4 19l16 0"/>
+                            <path d="M4 15l4 -6l4 2l4 -5l4 4"/>
+                        </svg>
+                        Comparación de Períodos Ambientales
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 120px);">
+                    <!-- Controles de selección de períodos -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary-lt">
+                                    <h6 class="card-title mb-0">Período Base</h6>
+                                </div>
+                                <div class="card-body">
+                                    <select class="form-select" id="base-period-selector">
+                                        <option value="current-month" selected>Mes Actual (Julio 2025)</option>
+                                        <option value="last-month">Mes Anterior (Junio 2025)</option>
+                                        <option value="last-quarter">Trimestre Anterior</option>
+                                        <option value="last-year">Año Anterior (2024)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-success">
+                                <div class="card-header bg-success-lt">
+                                    <h6 class="card-title mb-0">Período de Comparación</h6>
+                                </div>
+                                <div class="card-body">
+                                    <select class="form-select" id="compare-period-selector">
+                                        <option value="last-month" selected>Mes Anterior (Junio 2025)</option>
+                                        <option value="same-month-last-year">Mismo mes año anterior (Julio 2024)</option>
+                                        <option value="last-quarter">Trimestre Anterior</option>
+                                        <option value="custom">Período Personalizado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de comparación -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body py-3">
+                                    <div class="h3 text-success mb-1" id="co2-comparison">-15.3%</div>
+                                    <div class="text-muted small">Reducción CO2</div>
+                                    <div class="mt-2">
+                                        <span class="badge bg-success">Mejoró</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body py-3">
+                                    <div class="h3 text-primary mb-1" id="energy-comparison">+8.7%</div>
+                                    <div class="text-muted small">Ahorro Energía</div>
+                                    <div class="mt-2">
+                                        <span class="badge bg-primary">Mejoró</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body py-3">
+                                    <div class="h3 text-info mb-1" id="water-comparison">+12.4%</div>
+                                    <div class="text-muted small">Conservación Agua</div>
+                                    <div class="mt-2">
+                                        <span class="badge bg-info">Mejoró</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body py-3">
+                                    <div class="h3 text-warning mb-1" id="waste-comparison">-5.2%</div>
+                                    <div class="text-muted small">Gestión Residuos</div>
+                                    <div class="mt-2">
+                                        <span class="badge bg-warning">Declino</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico de comparación principal -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M3 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+                                            <path d="M12 21v-9"/>
+                                            <path d="M3 12h18"/>
+                                            <path d="M12 12v-6"/>
+                                            <path d="M21 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+                                        </svg>
+                                        Comparación por Categorías
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="comparison-chart" class="chart-container" style="min-height: 400px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de detalles comparativos -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-table me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z"/>
+                                            <path d="M3 10h18"/>
+                                            <path d="M10 3v18"/>
+                                        </svg>
+                                        Detalles Comparativos
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-vcenter">
+                                            <thead>
+                                                <tr>
+                                                    <th>Métrica</th>
+                                                    <th>Período Base</th>
+                                                    <th>Período Comparación</th>
+                                                    <th>Diferencia</th>
+                                                    <th>% Cambio</th>
+                                                    <th>Tendencia</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="avatar avatar-sm bg-success text-white me-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                    <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+                                                                    <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/>
+                                                                </svg>
+                                                            </span>
+                                                            CO2 Reducido
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="fw-bold">1,250 kg</span></td>
+                                                    <td><span class="fw-bold">1,080 kg</span></td>
+                                                    <td><span class="text-success">+170 kg</span></td>
+                                                    <td><span class="text-success">+15.3%</span></td>
+                                                    <td>
+                                                        <span class="badge bg-success">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs me-1" width="12" height="12" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M7 14l3 -3l3 3l5 -5"/>
+                                                                <path d="M18 6h-3v3"/>
+                                                            </svg>
+                                                            Mejora
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="avatar avatar-sm bg-primary text-white me-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                    <path d="M13 3v7h6l-8 11v-7h-6l8 -11"/>
+                                                                </svg>
+                                                            </span>
+                                                            Energía Ahorrada
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="fw-bold">2,340 kWh</span></td>
+                                                    <td><span class="fw-bold">2,150 kWh</span></td>
+                                                    <td><span class="text-primary">+190 kWh</span></td>
+                                                    <td><span class="text-primary">+8.7%</span></td>
+                                                    <td>
+                                                        <span class="badge bg-primary">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs me-1" width="12" height="12" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M7 14l3 -3l3 3l5 -5"/>
+                                                                <path d="M18 6h-3v3"/>
+                                                            </svg>
+                                                            Mejora
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="avatar avatar-sm bg-info text-white me-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                    <path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"/>
+                                                                </svg>
+                                                            </span>
+                                                            Agua Conservada
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="fw-bold">4,250 L</span></td>
+                                                    <td><span class="fw-bold">3,780 L</span></td>
+                                                    <td><span class="text-info">+470 L</span></td>
+                                                    <td><span class="text-info">+12.4%</span></td>
+                                                    <td>
+                                                        <span class="badge bg-info">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs me-1" width="12" height="12" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M7 14l3 -3l3 3l5 -5"/>
+                                                                <path d="M18 6h-3v3"/>
+                                                            </svg>
+                                                            Mejora
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="avatar avatar-sm bg-warning text-white me-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                    <path d="M12 17l-2 2l2 2"/>
+                                                                    <path d="M10 19h9a2 2 0 0 0 1.8 -2.8l-1 -1.8a2 2 0 0 0 -1.8 -1.2h-6.5"/>
+                                                                    <path d="M17 10l2 -2l-2 -2"/>
+                                                                    <path d="M19 8h-8.5a2 2 0 0 0 -1.8 1.2l-1 1.8"/>
+                                                                    <path d="M7.5 15.5l-1.8 -1.8a2 2 0 0 1 0 -2.4l1 -1.8a2 2 0 0 1 1.8 -1.2h4.5"/>
+                                                                </svg>
+                                                            </span>
+                                                            Residuos Reciclados
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="fw-bold">156 kg</span></td>
+                                                    <td><span class="fw-bold">164 kg</span></td>
+                                                    <td><span class="text-danger">-8 kg</span></td>
+                                                    <td><span class="text-danger">-5.2%</span></td>
+                                                    <td>
+                                                        <span class="badge bg-warning">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-xs me-1" width="12" height="12" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M7 10l3 3l3 -3l5 5"/>
+                                                                <path d="M18 18h-3v-3"/>
+                                                            </svg>
+                                                            Declina
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="export-comparison">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>
+                            <path d="M7 11l5 5l5 -5"/>
+                            <path d="M12 4l0 12"/>
+                        </svg>
+                        Exportar Comparación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="../assets/tabler/js/tabler.min.js" defer></script>
+    <script src="../assets/js/api/config.js"></script>
+    <script src="../assets/js/api/services/auth-service.js"></script>
+    <script src="../assets/js/api/route-guard.js"></script>
+    <script src="../assets/js/ui/component-loader.js"></script>
+    <script src="../assets/js/api/services/environmental-stats-service.js"></script>
+    <script src="../assets/js/ui/controllers/Components/topbar-controller.js"></script>
+    <script src="../assets/js/ui/controllers/Components/sidebar-controller.js"></script>
+    <script src="../assets/js/ui/controllers/Components/environmental-stats-controller.js"></script>
+    <script src="../assets/js/ui/initializers/environmental-stats-initializer.js"></script>
+    
+    <script>
+        // Inicializar el controlador de estadísticas ambientales
+        let environmentalStatsController;
+        let comparisonChart;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Inicializar componentes básicos primero
+            const environmentalStatsInitializer = new EnvironmentalStatsInitializer();
+            await environmentalStatsInitializer.init();
+            
+            // Luego inicializar el controlador de estadísticas ambientales
+            environmentalStatsController = new EnvironmentalStatsController();
+            await environmentalStatsController.init();
+            
+            // Inicializar funcionalidad del modal de comparación
+            initializeComparisonModal();
+        });
+
+        function initializeComparisonModal() {
+            // Event listener para abrir el modal de comparación
+            document.getElementById('compare-periods').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('compare-periods-modal'));
+                modal.show();
+                
+                // Cargar gráfico de comparación cuando se abra el modal
+                setTimeout(() => {
+                    loadComparisonChart();
+                }, 300);
+            });
+
+            // Event listeners para cambios en los selectores de período
+            document.getElementById('base-period-selector').addEventListener('change', updateComparison);
+            document.getElementById('compare-period-selector').addEventListener('change', updateComparison);
+
+            // Event listener para exportar comparación
+            document.getElementById('export-comparison').addEventListener('click', exportComparison);
+        }
+
+        function loadComparisonChart() {
+            if (comparisonChart) {
+                comparisonChart.destroy();
+            }
+
+            const options = {
+                series: [{
+                    name: 'Período Base (Julio 2025)',
+                    data: [1250, 2340, 4250, 156, 890]
+                }, {
+                    name: 'Período Comparación (Junio 2025)',
+                    data: [1080, 2150, 3780, 164, 825]
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 400,
+                    toolbar: {
+                        show: true,
+                        tools: {
+                            download: true,
+                            selection: false,
+                            zoom: false,
+                            zoomin: false,
+                            zoomout: false,
+                            pan: false,
+                            reset: false
+                        }
+                    }
+                },
+                colors: ['#007bff', '#28a745'],
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded',
+                        borderRadius: 4
+                    },
+                },
+                dataLabels: {
+                    enabled: true,
+                    style: {
+                        colors: ['#fff']
+                    }
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['CO2 Reducido (kg)', 'Energía Ahorrada (kWh)', 'Agua Conservada (L)', 'Residuos Reciclados (kg)', 'Sostenibilidad (puntos)'],
+                    labels: {
+                        style: {
+                            fontSize: '12px'
+                        }
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Valores'
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val, opts) {
+                            const categories = ['kg', 'kWh', 'L', 'kg', 'puntos'];
+                            return val + ' ' + categories[opts.dataPointIndex];
+                        }
+                    }
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'center'
+                },
+                responsive: [{
+                    breakpoint: 768,
+                    options: {
+                        chart: {
+                            height: 300
+                        },
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '70%'
+                            }
+                        }
+                    }
+                }]
+            };
+
+            comparisonChart = new ApexCharts(document.querySelector("#comparison-chart"), options);
+            comparisonChart.render();
+        }
+
+        function updateComparison() {
+            // Simulación de actualización de datos basada en los períodos seleccionados
+            const basePeriod = document.getElementById('base-period-selector').value;
+            const comparePeriod = document.getElementById('compare-period-selector').value;
+            
+            // Datos simulados para diferentes períodos
+            const periodData = {
+                'current-month': {
+                    co2: 1250,
+                    energy: 2340,
+                    water: 4250,
+                    waste: 156,
+                    sustainability: 890
+                },
+                'last-month': {
+                    co2: 1080,
+                    energy: 2150,
+                    water: 3780,
+                    waste: 164,
+                    sustainability: 825
+                },
+                'same-month-last-year': {
+                    co2: 980,
+                    energy: 1950,
+                    water: 3200,
+                    waste: 145,
+                    sustainability: 750
+                },
+                'last-quarter': {
+                    co2: 3200,
+                    energy: 6800,
+                    water: 11500,
+                    waste: 420,
+                    sustainability: 2400
+                }
+            };
+
+            const baseData = periodData[basePeriod];
+            const compareData = periodData[comparePeriod];
+
+            // Actualizar las tarjetas de resumen
+            updateSummaryCards(baseData, compareData);
+
+            // Actualizar el gráfico
+            if (comparisonChart) {
+                comparisonChart.updateSeries([{
+                    name: getPeriodLabel(basePeriod),
+                    data: [baseData.co2, baseData.energy, baseData.water, baseData.waste, baseData.sustainability]
+                }, {
+                    name: getPeriodLabel(comparePeriod),
+                    data: [compareData.co2, compareData.energy, compareData.water, compareData.waste, compareData.sustainability]
+                }]);
+            }
+        }
+
+        function updateSummaryCards(baseData, compareData) {
+            // Calcular diferencias porcentuales
+            const co2Change = ((baseData.co2 - compareData.co2) / compareData.co2 * 100).toFixed(1);
+            const energyChange = ((baseData.energy - compareData.energy) / compareData.energy * 100).toFixed(1);
+            const waterChange = ((baseData.water - compareData.water) / compareData.water * 100).toFixed(1);
+            const wasteChange = ((baseData.waste - compareData.waste) / compareData.waste * 100).toFixed(1);
+
+            // Actualizar elementos HTML
+            document.getElementById('co2-comparison').textContent = (co2Change > 0 ? '+' : '') + co2Change + '%';
+            document.getElementById('energy-comparison').textContent = (energyChange > 0 ? '+' : '') + energyChange + '%';
+            document.getElementById('water-comparison').textContent = (waterChange > 0 ? '+' : '') + waterChange + '%';
+            document.getElementById('waste-comparison').textContent = (wasteChange > 0 ? '+' : '') + wasteChange + '%';
+
+            // Actualizar clases y badges según las mejoras
+            updateBadgeStatus('co2-comparison', co2Change, true);
+            updateBadgeStatus('energy-comparison', energyChange, true);
+            updateBadgeStatus('water-comparison', waterChange, true);
+            updateBadgeStatus('waste-comparison', wasteChange, false);
+        }
+
+        function updateBadgeStatus(elementId, change, higherIsBetter) {
+            const element = document.getElementById(elementId);
+            const badge = element.closest('.card-body').querySelector('.badge');
+            
+            const isImprovement = higherIsBetter ? change > 0 : change < 0;
+            
+            if (isImprovement) {
+                element.className = 'h3 text-success mb-1';
+                badge.className = 'badge bg-success';
+                badge.textContent = 'Mejoró';
+            } else {
+                element.className = 'h3 text-danger mb-1';
+                badge.className = 'badge bg-danger';
+                badge.textContent = 'Empeoró';
+            }
+        }
+
+        function getPeriodLabel(period) {
+            const labels = {
+                'current-month': 'Mes Actual (Julio 2025)',
+                'last-month': 'Mes Anterior (Junio 2025)',
+                'same-month-last-year': 'Mismo mes año anterior (Julio 2024)',
+                'last-quarter': 'Trimestre Anterior',
+                'last-year': 'Año Anterior (2024)'
+            };
+            return labels[period] || period;
+        }
+
+        function exportComparison() {
+            // Simulación de exportación
+            const data = {
+                basePeriod: document.getElementById('base-period-selector').value,
+                comparePeriod: document.getElementById('compare-period-selector').value,
+                timestamp: new Date().toISOString(),
+                metrics: {
+                    co2: document.getElementById('co2-comparison').textContent,
+                    energy: document.getElementById('energy-comparison').textContent,
+                    water: document.getElementById('water-comparison').textContent,
+                    waste: document.getElementById('waste-comparison').textContent
+                }
+            };
+
+            // Crear y descargar archivo JSON
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `comparacion-ambiental-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Mostrar mensaje de éxito
+            const toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-white bg-success border-0';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Comparación exportada exitosamente
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

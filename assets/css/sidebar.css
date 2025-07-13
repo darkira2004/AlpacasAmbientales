@@ -1,0 +1,476 @@
+/* ===== SIDEBAR STYLES ===== */
+
+/* Reglas adicionales para eliminar todos los colores azules de Bootstrap */
+.navbar-vertical * {
+    /* Forzar que no haya colores azules de Bootstrap */
+    --bs-primary: #FF6900 !important;
+    --bs-primary-rgb: 255, 105, 0 !important;
+    --bs-link-color: #FF6900 !important;
+    --bs-link-hover-color: #e55a00 !important;
+}
+
+/* Sobrescribir cualquier link azul */
+.navbar-vertical a,
+.navbar-vertical a:link,
+.navbar-vertical a:visited {
+    color: #6c757d !important;
+}
+
+.navbar-vertical a:hover,
+.navbar-vertical a:active,
+.navbar-vertical a:focus {
+    color: #FF6900 !important;
+}
+
+/* Sobrescribir botones azules */
+.navbar-vertical .btn-primary {
+    background-color: #FF6900 !important;
+    border-color: #FF6900 !important;
+    color: #fff !important;
+}
+
+.navbar-vertical .btn-primary:hover,
+.navbar-vertical .btn-primary:focus,
+.navbar-vertical .btn-primary:active {
+    background-color: #e55a00 !important;
+    border-color: #e55a00 !important;
+    color: #fff !important;
+}
+
+/* Sobrescribir badges azules */
+.navbar-vertical .badge-primary {
+    background-color: #FF6900 !important;
+    color: #fff !important;
+}
+
+/* Sobrescribir cualquier texto azul */
+.navbar-vertical .text-primary {
+    color: #FF6900 !important;
+}
+
+/* Sobrescribir borders azules */
+.navbar-vertical .border-primary {
+    border-color: #FF6900 !important;
+}
+
+/* Base styles para asegurar consistencia en todas las pantallas */
+.navbar-vertical {
+    width: 280px;
+    background-color: #FFF8F5;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-vertical .container-fluid {
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-vertical .navbar-brand {
+    padding: 0 1.5rem 0.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: #333;
+    margin-top: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 32px;
+}
+
+.navbar-vertical .navbar-brand img {
+    height: 28px;
+    width: auto;
+}
+
+.navbar-vertical .navbar-nav {
+    padding: 0.5rem 0;
+    width: 100%;
+}
+
+.navbar-vertical .nav-item {
+    width: 100%;
+}
+
+.navbar-vertical .nav-link {
+    padding: 0.75rem 1.5rem;
+    color: #6c757d !important;
+    border-radius: 0;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    border: none !important;
+    border-left: none !important;
+}
+
+.navbar-vertical .nav-link:hover,
+.navbar-vertical .nav-link.active {
+    color: #FF6900 !important;
+    background-color: rgba(255, 105, 0, 0.1) !important;
+    border: none !important;
+    border-left: 3px solid #FF6900 !important;
+    box-shadow: none !important;
+}
+
+.navbar-vertical .nav-link-icon {
+    width: 1.5rem;
+    text-align: center;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.navbar-vertical .nav-link-title {
+    flex-grow: 1;
+}
+
+/* Reglas específicas para eliminar colores azules del estado activo */
+.navbar-vertical .nav-link.active,
+.navbar-vertical .nav-link:focus,
+.navbar-vertical .nav-link[aria-selected="true"] {
+    border-left-color: #FF6900 !important;
+    border-color: #FF6900 !important;
+    background-color: rgba(255, 105, 0, 0.1) !important;
+    color: #FF6900 !important;
+    box-shadow: none !important;
+}
+
+/* Eliminar cualquier pseudo-elemento o borde que Bootstrap pueda agregar */
+.navbar-vertical .nav-link.active::before,
+.navbar-vertical .nav-link.active::after,
+.navbar-vertical .nav-link:focus::before,
+.navbar-vertical .nav-link:focus::after,
+.navbar-vertical .nav-item.active::before,
+.navbar-vertical .nav-item.active::after,
+.navbar-vertical li.active::before,
+.navbar-vertical li.active::after {
+    display: none !important;
+    border: none !important;
+    background: none !important;
+    content: none !important;
+}
+
+/* Sobrescribir completamente los estilos de foco de Bootstrap */
+.navbar-vertical .nav-link:focus-visible {
+    outline: 2px solid #FF6900 !important;
+    outline-offset: -2px !important;
+    box-shadow: none !important;
+}
+
+/* Estilos para dropdowns del sidebar */
+.navbar-vertical .dropdown-menu {
+    background-color: #FFF8F5;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-vertical .dropdown-item {
+    color: #6c757d;
+    padding: 0.5rem 1.5rem 0.5rem 3.25rem;
+    background: transparent;
+    border: none;
+    transition: all 0.15s ease;
+}
+
+.navbar-vertical .dropdown-item:hover,
+.navbar-vertical .dropdown-item:focus {
+    color: #FF6900;
+    background-color: rgba(255, 105, 0, 0.1);
+}
+
+.navbar-vertical .dropdown-toggle::after {
+    margin-left: auto;
+}
+
+/* Footer del sidebar */
+.navbar-vertical .mt-auto {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.5rem;
+}
+
+.navbar-vertical .btn-outline-secondary,
+.navbar-vertical .btn-outline-light {
+    border-color: #FF6900 !important;
+    color: #FF6900 !important;
+    background-color: transparent !important;
+}
+
+.navbar-vertical .btn-outline-secondary:hover,
+.navbar-vertical .btn-outline-light:hover {
+    background-color: #FF6900 !important;
+    border-color: #FF6900 !important;
+    color: #fff !important;
+}
+
+/* Desktop: Mantenemos todo tal como está funcionando */
+@media (min-width: 992px) {
+    .navbar-vertical {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .navbar-vertical .container-fluid {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .page-wrapper {
+        margin-left: 280px;
+        transition: margin-left 0.3s ease;
+    }
+    
+    /* Sidebar oculto en desktop - completamente fuera de vista */
+    .navbar-vertical.hidden {
+        left: -280px;
+    }
+    
+    /* Cuando el sidebar está oculto, el contenido ocupa todo el ancho */
+    .page-wrapper.sidebar-hidden {
+        margin-left: 0;
+    }
+}
+
+/* Móvil: Sidebar responsivo mejorado - adaptativo según tamaño */
+@media (max-width: 991.98px) {
+    #sidebar.navbar-vertical {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        /* Ancho adaptativo: 50% de la pantalla con límites mínimo y máximo */
+        width: max(280px, min(50vw, 320px)) !important; 
+        height: 100vh;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        /* Mantener color consistente */
+        background-color: #FFF8F5 !important;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* Eliminar cualquier padding o margin que pueda crear espacio arriba */
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Container fluid sin padding superior */
+    #sidebar .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Header específico del sidebar - posicionado absolutamente arriba */
+    #sidebar .navbar-brand.navbar-brand-autodark {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        padding: 0.5rem 1.5rem 0.5rem 1.5rem !important;
+        margin: 0 !important;
+        text-align: center !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        /* Mantener color consistente */
+        background-color: #FFF8F5 !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: #333 !important;
+        height: 48px !important; /* Altura fija */
+        z-index: 100 !important; /* Z-index alto para estar por encima del contenido */
+    }
+    
+    /* Centrar el logo completamente */
+    #sidebar .navbar-brand .d-flex {
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    /* Asegurar que el logo no sea afectado por el botón cerrar */
+    #sidebar .navbar-brand img {
+        display: block !important;
+        margin: 0 auto !important;
+        max-height: 28px !important;
+        width: auto !important;
+    }
+    
+    #sidebar.navbar-vertical.show {
+        transform: translateX(0) !important;
+    }
+    
+    /* Asegurar que el contenido del sidebar mantenga colores consistentes */
+    .navbar-vertical .navbar-collapse {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        background-color: transparent !important;
+        margin-top: 48px !important; /* Espacio para el header fijo */
+        padding-top: 0.5rem !important;
+    }
+    
+    /* Mantener color de fondo consistente para navegación */
+    .navbar-vertical .navbar-nav {
+        display: block !important;
+        width: 100% !important;
+        background-color: transparent !important;
+        padding: 0.5rem 0;
+    }
+    
+    /* Mantener estilos consistentes para nav-items */
+    .navbar-vertical .nav-item {
+        display: block !important;
+        width: 100% !important;
+        background-color: transparent !important;
+    }
+    
+    .navbar-vertical .nav-link {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        background-color: transparent !important;
+        color: #6c757d !important;
+    }
+    
+    .navbar-vertical .nav-link:hover,
+    .navbar-vertical .nav-link.active {
+        background-color: rgba(255, 105, 0, 0.1) !important;
+        color: #FF6900 !important;
+        border: none !important;
+        border-left: 3px solid #FF6900 !important;
+        box-shadow: none !important;
+    }
+    
+    /* Mantener estilos consistentes para dropdowns */
+    .navbar-vertical .dropdown-menu {
+        position: static;
+        float: none;
+        max-width: none;
+        margin: 0;
+        background-color: #FFF8F5 !important;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .navbar-vertical .dropdown-item {
+        background-color: transparent !important;
+        color: #6c757d !important;
+    }
+    
+    .navbar-vertical .dropdown-item:hover,
+    .navbar-vertical .dropdown-item:focus {
+        background-color: rgba(255, 105, 0, 0.1) !important;
+        color: #FF6900 !important;
+    }
+    
+    /* Headers de dropdown con colores consistentes */
+    .navbar-vertical .dropdown-header {
+        color: #6c757d !important;
+        background-color: transparent !important;
+    }
+    
+    /* Solo cuando el dropdown está activo */
+    .navbar-vertical .dropdown.show .dropdown-menu {
+        display: block;
+        background-color: #FFF8F5 !important;
+    }
+    
+    .page-wrapper {
+        margin-left: 0;
+    }
+    
+    /* Backdrop dinámico - solo para pantallas medianas y grandes */
+    .navbar-vertical.show::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: max(280px, min(50vw, 320px)); /* Comenzar donde termina el sidebar */
+        width: calc(100vw - max(280px, min(50vw, 320px))); /* Cubrir el resto */
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        pointer-events: none; /* NO permitir clicks - solo visual */
+    }
+    
+    /* En pantallas muy pequeñas, eliminar el backdrop */
+    @media (max-width: 480px) {
+        .navbar-vertical.show::before {
+            display: none;
+        }
+        
+        #sidebar.navbar-vertical {
+            /* En pantallas muy pequeñas, ocupar más espacio para mejor usabilidad */
+            width: min(90vw, 320px) !important;
+        }
+    }
+    
+    /* Botón cerrar del sidebar en móviles - diseño sutil de Tabler */
+    #sidebar-close {
+        position: absolute !important;
+        top: 50% !important;
+        right: 1rem !important;
+        transform: translateY(-50%) !important;
+        z-index: 101 !important; /* Por encima del header */
+        opacity: 0.6 !important;
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0.125rem !important;
+        margin: 0 !important;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 0.25rem !important;
+        transition: all 0.15s ease !important;
+        font-size: 0.875rem !important;
+        color: #6c757d !important;
+    }
+    
+    #sidebar-close:hover {
+        opacity: 1 !important;
+        background-color: rgba(255, 105, 0, 0.1) !important;
+        color: #FF6900 !important;
+        transform: translateY(-50%) scale(1.05) !important;
+    }
+    
+    #sidebar-close:active {
+        transform: translateY(-50%) scale(0.95) !important;
+        background-color: rgba(255, 105, 0, 0.2) !important;
+    }
+    
+    /* Footer del sidebar con colores consistentes */
+    .navbar-vertical .mt-auto {
+        background-color: transparent !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem 1.5rem;
+    }
+    
+    .navbar-vertical .btn-outline-secondary,
+    .navbar-vertical .btn-outline-light {
+        border-color: #FF6900 !important;
+        color: #FF6900 !important;
+        background-color: transparent !important;
+    }
+    
+    .navbar-vertical .btn-outline-secondary:hover,
+    .navbar-vertical .btn-outline-light:hover {
+        background-color: #FF6900 !important;
+        border-color: #FF6900 !important;
+        color: #fff !important;
+    }
+}

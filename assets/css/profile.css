@@ -1,0 +1,452 @@
+/* ===== PROFILE MODAL STYLES ===== */
+
+/* Modal del perfil de administrador */
+.admin-profile-modal {
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none; /* Oculto por defecto */
+}
+
+.admin-profile-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.admin-profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-profile-info {
+    display: grid;
+    gap: 15px;
+}
+
+.avatar-large {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modal {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+/* Avatar upload container - más nativo a Tabler */
+.avatar-upload-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 1rem 0;
+}
+
+.avatar-upload-container .avatar,
+.avatar-upload-container img.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: block;
+    margin: 0 1rem 0 0;
+}
+
+
+
+/* Botón de upload estilo Tabler */
+.avatar-upload-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.375rem;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.avatar-upload-container:hover .avatar-upload-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.avatar-upload-btn .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.25rem;
+}
+
+/* Estados de carga usando clases Tabler */
+.profile-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.avatar-loading {
+    opacity: 0.6;
+    position: relative;
+}
+
+.avatar-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .avatar-upload-container .avatar,
+    .avatar-upload-container img.avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+    }
+    
+    .avatar-upload-btn {
+        bottom: 4px;
+        right: 4px;
+        padding: 0.25rem 0.375rem;
+        font-size: 0.6875rem;
+    }
+    
+    .avatar-upload-btn .icon {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Profile loaded state */
+.profile-loaded {
+    border-color: var(--tblr-success);
+}
+
+/* Elementos clickeables para email y teléfono */
+.email-clickable,
+.phone-clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0.25rem 0.375rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+}
+
+.email-clickable:hover,
+.phone-clickable:hover {
+    background-color: var(--tblr-primary-lt);
+    color: var(--tblr-primary);
+    text-decoration: underline;
+}
+
+/* Mejoras para el diseño general del modal */
+.admin-profile-header-centered {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.admin-profile-header-info h3 {
+    color: var(--tblr-body-color);
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* Estilos para info-item expanded - Diseño Tabler */
+.info-item.expanded {
+    background: var(--tblr-bg-surface);
+    border: 1px solid var(--tblr-border-color-active);
+    border-left: 3px solid var(--tblr-primary);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    z-index: 1;
+}
+
+.info-item.expanded:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.info-item.expanded label {
+    color: var(--tblr-primary);
+    font-weight: 600;
+}
+
+.info-item.expanded span {
+    color: var(--tblr-body-color);
+}
+
+/* Animación suave para la expansión */
+.info-item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-item:not(.expanded):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Estilos para formularios dentro de info-item expanded */
+.info-item.expanded .form-group {
+    margin-bottom: 0.75rem;
+}
+
+.info-item.expanded .form-label {
+    color: var(--tblr-body-color);
+    font-weight: 500;
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+}
+
+.info-item.expanded .form-control {
+    background-color: var(--tblr-bg-forms);
+    border: 1px solid var(--tblr-border-color);
+    border-radius: var(--tblr-border-radius);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.4285714286;
+    color: var(--tblr-body-color);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.info-item.expanded .form-control:focus {
+    background-color: var(--tblr-bg-forms);
+    border-color: var(--tblr-primary);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(var(--tblr-primary-rgb), 0.25);
+}
+
+.info-item.expanded .form-control:disabled,
+.info-item.expanded .form-control[readonly] {
+    background-color: var(--tblr-bg-surface-secondary);
+    opacity: 1;
+}
+
+/* Botones dentro de info-item expanded */
+.info-item.expanded .btn {
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    line-height: 1.4285714286;
+    border-radius: var(--tblr-border-radius);
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.info-item.expanded .btn-primary {
+    color: #fff;
+    background-color: var(--tblr-primary);
+    border-color: var(--tblr-primary);
+}
+
+.info-item.expanded .btn-primary:hover {
+    color: #fff;
+    background-color: var(--tblr-primary-darken);
+    border-color: var(--tblr-primary-darken);
+}
+
+.info-item.expanded .btn-outline-secondary {
+    color: var(--tblr-secondary);
+    border-color: var(--tblr-border-color);
+    background-color: transparent;
+}
+
+.info-item.expanded .btn-outline-secondary:hover {
+    color: var(--tblr-body-color);
+    background-color: var(--tblr-bg-surface-secondary);
+    border-color: var(--tblr-border-color);
+}
+
+.info-item.expanded .btn-ghost {
+    color: var(--tblr-body-color);
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.info-item.expanded .btn-ghost:hover {
+    color: var(--tblr-primary);
+    background-color: var(--tblr-primary-lt);
+}
+
+/* Grupo de botones */
+.info-item.expanded .btn-group {
+    gap: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+}
+
+.info-item.expanded .btn-group .btn {
+    margin-right: 0;
+}
+
+/* Input groups */
+.info-item.expanded .input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.info-item.expanded .input-group .form-control {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.info-item.expanded .input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4285714286;
+    color: var(--tblr-body-color);
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--tblr-bg-surface-secondary);
+    border: 1px solid var(--tblr-border-color);
+    border-radius: var(--tblr-border-radius);
+}
+
+/* Iconos en botones */
+.info-item.expanded .btn .icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25rem;
+}
+
+.info-item.expanded .btn .icon:only-child {
+    margin-right: 0;
+}
+
+/* Estados de validación */
+.info-item.expanded .is-valid {
+    border-color: var(--tblr-success);
+}
+
+.info-item.expanded .is-invalid {
+    border-color: var(--tblr-danger);
+}
+
+.info-item.expanded .invalid-feedback {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--tblr-danger);
+}
+
+/* Mensajes de estado para formularios de cambio de email/teléfono */
+.email-status-message,
+.verify-status-message,
+.phone-status-message,
+.phone-verify-status-message {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border-radius: var(--tblr-border-radius);
+    font-size: 0.875rem;
+    line-height: 1.4285714286;
+    border: 1px solid transparent;
+    display: none;
+}
+
+/* Estados de éxito */
+.email-status-message.success,
+.verify-status-message.success,
+.phone-status-message.success,
+.phone-verify-status-message.success {
+    color: var(--tblr-success);
+    background-color: var(--tblr-success-lt);
+    border-color: var(--tblr-success-darken);
+}
+
+/* Estados de error */
+.email-status-message.error,
+.verify-status-message.error,
+.phone-status-message.error,
+.phone-verify-status-message.error {
+    color: var(--tblr-danger);
+    background-color: var(--tblr-danger-lt);
+    border-color: var(--tblr-danger-darken);
+}
+
+/* Estados de carga */
+.email-status-message.loading,
+.verify-status-message.loading,
+.phone-status-message.loading,
+.phone-verify-status-message.loading {
+    color: var(--tblr-primary);
+    background-color: var(--tblr-primary-lt);
+    border-color: var(--tblr-primary-darken);
+    position: relative;
+}
+
+/* Indicador de carga */
+.email-status-message.loading::before,
+.verify-status-message.loading::before,
+.phone-status-message.loading::before,
+.phone-verify-status-message.loading::before {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    vertical-align: text-bottom;
+}
+
+/* Estados de información */
+.email-status-message.info,
+.verify-status-message.info,
+.phone-status-message.info,
+.phone-verify-status-message.info {
+    color: var(--tblr-info);
+    background-color: var(--tblr-info-lt);
+    border-color: var(--tblr-info-darken);
+}

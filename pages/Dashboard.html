@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Dashboard - Sistema de Gestión Ambiental</title>
+    <!-- CSS files -->
+    <link href="../assets/tabler/css/tabler.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <link href="../assets/tabler/css/demo.min.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link href="../assets/css/topbar.css" rel="stylesheet"/>
+    <link href="../assets/css/sidebar.css" rel="stylesheet"/>
+    <link href="../assets/css/dashboard.css" rel="stylesheet"/>
+    
+    <!-- Custom styles for ApexCharts -->
+    <style>
+        .apexcharts-datalabels text {
+            fill: #ffffff !important;
+            font-weight: bold !important;
+        }
+        
+        .apexcharts-pie-label {
+            fill: #ffffff !important;
+            font-weight: bold !important;
+        }
+        
+        .apexcharts-datalabel-label,
+        .apexcharts-datalabel-value {
+            fill: #ffffff !important;
+            font-weight: bold !important;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="page">
+        <!-- Sidebar -->
+        <div id="sidebar-container"></div>
+
+        <!-- Wrapper -->
+        <div class="page-wrapper">
+            <!-- Topbar -->
+            <div id="topbar-container"></div>
+            
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl">
+                    <!-- Page header -->
+                    <div class="page-header d-print-none mb-4">
+                        <div class="container-xl">
+                            <div class="row g-2 align-items-center">
+                                <div class="col">
+                                    <h2 class="page-title mb-1" style="color: var(--popeyes-dark); font-weight: 700;">
+                                        Dashboard Administrativo
+                                    </h2>
+                                    <div class="text-muted mt-1">Panel de control del sistema de gestión ambiental</div>
+                                </div>
+                                <div class="col-auto ms-auto d-print-none">
+                                    <div class="btn-list">
+                                        <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#branchesModal" title="Top Sucursales">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M3 21l18 0"/>
+                                                <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"/>
+                                                <path d="M5 21l0 -10.15"/>
+                                                <path d="M19 21l0 -10.15"/>
+                                                <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#usersModal" title="Top Usuarios">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+                                                <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                                <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal" title="Actividades Recientes">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/>
+                                                <path d="M9 17v1a3 3 0 0 0 6 0v-1"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn btn-primary" onclick="adminDashboardController.refresh()" title="Actualizar Datos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                                                <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overview Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            <div id="overview-cards"></div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="row g-4 mb-4">
+                        <!-- Waste Categories Chart -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">Categorías de Residuos</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="waste-categories-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monthly Trends Chart -->
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">Tendencias Mensuales</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="monthly-trends-chart" class="chart-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Top Sucursales -->
+    <div class="modal modal-blur fade" id="branchesModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-height: 90vh;">
+                <div class="modal-header" style="background-color: #FF6900 !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trophy me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M8 21l8 0"/>
+                            <path d="M12 17l0 4"/>
+                            <path d="M7 4l10 0"/>
+                            <path d="M17 4v8a5 5 0 0 1 -10 0v-8"/>
+                            <path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                            <path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                        </svg>
+                        Top Sucursales por Reciclaje
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 120px);">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="alert alert-primary d-flex align-items-center" role="alert" style="background-color: var(--popeyes-light); border-color: var(--popeyes-primary); color: var(--popeyes-dark);">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                                    <path d="M12 9h.01"/>
+                                    <path d="M11 12h1v4h1"/>
+                                </svg>
+                                Ranking basado en volumen de reciclaje, precisión y reducción de CO2
+                            </div>
+                        </div>
+                    </div>
+                    <div id="branches-modal-content">
+                        <!-- Contenido cargado dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Top Usuarios -->
+    <div class="modal modal-blur fade" id="usersModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-height: 90vh;">
+                <div class="modal-header" style="background-color: #FF6900 !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/>
+                            <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/>
+                            <path d="M6.802 12.396l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/>
+                        </svg>
+                        Top Usuarios Activos
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 120px);">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="alert alert-primary d-flex align-items-center" role="alert" style="background-color: var(--popeyes-light); border-color: var(--popeyes-primary); color: var(--popeyes-dark);">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                                    <path d="M12 9h.01"/>
+                                    <path d="M11 12h1v4h1"/>
+                                </svg>
+                                Ranking basado en actividad, puntos acumulados y contribución ambiental
+                            </div>
+                        </div>
+                    </div>
+                    <div id="users-modal-content">
+                        <!-- Contenido cargado dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Actividades Recientes -->
+    <div class="modal modal-blur fade" id="activitiesModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-height: 90vh;">
+                <div class="modal-header" style="background-color: #FF6900 !important; color: white; flex-shrink: 0;">
+                    <h5 class="modal-title" style="color: white; font-weight: 700;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/>
+                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"/>
+                        </svg>
+                        Actividades Recientes del Sistema
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(255,255,255,0.2); border-radius: 6px; padding: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 120px);">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="alert alert-primary d-flex align-items-center" role="alert" style="background-color: var(--popeyes-light); border-color: var(--popeyes-primary); color: var(--popeyes-dark);">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                                    <path d="M12 9h.01"/>
+                                    <path d="M11 12h1v4h1"/>
+                                </svg>
+                                Registro cronológico de eventos y actividades del sistema
+                            </div>
+                        </div>
+                    </div>
+                    <div id="activities-modal-content">
+                        <!-- Contenido cargado dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="../assets/tabler/js/tabler.min.js" defer></script>
+    <script src="../assets/js/api/config.js"></script>
+    <script src="../assets/js/api/services/auth-service.js"></script>
+    <script src="../assets/js/api/route-guard.js"></script>
+    <script src="../assets/js/ui/component-loader.js"></script>
+    <script src="../assets/js/api/services/admin-dashboard-service.js"></script>
+    <script src="../assets/js/ui/controllers/Components/topbar-controller.js"></script>
+    <script src="../assets/js/ui/controllers/Components/sidebar-controller.js"></script>
+    <script src="../assets/js/ui/controllers/Components/admin-dashboard-controller.js"></script>
+    <script src="../assets/js/ui/initializers/dashboard-initializer.js"></script>
+    
+    <script>
+        // Inicializar el controlador del dashboard administrativo
+        let adminDashboardController;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Inicializar componentes básicos primero
+            const dashboardInitializer = new DashboardInitializer();
+            await dashboardInitializer.init();
+            
+            // Luego inicializar el controlador del dashboard administrativo
+            adminDashboardController = new AdminDashboardController();
+            await adminDashboardController.init();
+        });
+    </script>
+</body>
+</html>

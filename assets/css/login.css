@@ -1,0 +1,667 @@
+/**
+ * Login Page Styles - Estilos específicos para la página de login
+ * Sistema de Gestión Ambiental - Temática Popeyes
+ */
+
+/* Layout principal con colores de Popeyes */
+body {
+    background: linear-gradient(135deg, #FF6900 0%, #DC2626 50%, #FFB800 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Patrón decorativo de fondo */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255, 184, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255, 105, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Tarjeta de login */
+.card-login {
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: none;
+    border-radius: 16px;
+    background: #FFFFFF !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-login .card-body {
+    background: #FFFFFF !important;
+    color: inherit !important;
+}
+
+/* Borde decorativo superior */
+.card-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #FF6900 0%, #FFB800 50%, #DC2626 100%);
+}
+
+/* Logo */
+.logo-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 0;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container img {
+    height: 55px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Títulos */
+.login-title {
+    color: #DC2626 !important;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1.75rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.login-subtitle {
+    color: #FF6900 !important;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+/* Botón de login con estilo Popeyes */
+.btn-login {
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #FF6900 0%, #DC2626 100%) !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    text-transform: uppercase;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    outline: none !important;
+}
+
+.btn-login::before {
+    content: '';
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: left 0.5s !important;
+    z-index: 1 !important;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4) !important;
+    background: linear-gradient(135deg, #E55A00 0%, #B91C1C 100%) !important;
+}
+
+.btn-login:hover::before {
+    left: 100% !important;
+}
+
+.btn-login:active {
+    transform: translateY(0) !important;
+    background: linear-gradient(135deg, #d14500 0%, #991b1b 100%) !important;
+    box-shadow: 0 2px 8px rgba(255, 105, 0, 0.3) !important;
+}
+
+.btn-login:disabled {
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.7 !important;
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%) !important;
+    cursor: not-allowed !important;
+}
+
+.btn-login:focus {
+    outline: 2px solid #FFB800 !important;
+    outline-offset: 2px !important;
+}
+
+/* Formularios flotantes con temática Popeyes */
+.form-floating .form-control {
+    height: 48px !important;
+    padding-top: 1.2rem;
+    border-radius: 8px;
+    border: 2px solid #FFB800;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #FEFEFE;
+    color: #1a1a1a !important;
+    font-weight: 500;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+}
+
+.form-floating .form-control:focus {
+    border-color: #FF6900;
+    box-shadow: 0 0 0 0.3rem rgba(255, 105, 0, 0.25);
+    background: #FFFFFF;
+    color: #1a1a1a !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+}
+
+.form-floating .form-control::placeholder {
+    color: #6c757d !important;
+    opacity: 0.7;
+}
+
+.form-floating .form-control:not(:placeholder-shown) {
+    color: #1a1a1a !important;
+    height: 48px !important;
+}
+
+/* Contenedor específico para evitar deformación */
+.form-floating {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    overflow: visible !important;
+    margin-bottom: 0.25rem;
+}
+
+.form-floating.position-relative {
+    min-height: 48px !important;
+    display: block !important;
+}
+
+.form-floating label {
+    color: #DC2626;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.form-floating .form-control:focus ~ label,
+.form-floating .form-control:not(:placeholder-shown) ~ label {
+    color: #FF6900;
+}
+
+/* Iconos en labels */
+.form-floating label i {
+    opacity: 0.8;
+    color: #FFB800;
+}
+
+/* Botón para mostrar/ocultar contraseña */
+.btn-password-toggle {
+    position: absolute !important;
+    right: 10px !important;
+    top: 12px !important;
+    background: none !important;
+    border: none !important;
+    color: #FFB800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    z-index: 10;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    outline: none !important;
+}
+
+.btn-password-toggle:hover {
+    background-color: rgba(255, 184, 0, 0.1) !important;
+    color: #FF6900;
+}
+
+.btn-password-toggle:active {
+    background-color: rgba(255, 184, 0, 0.2) !important;
+}
+
+.btn-password-toggle:focus {
+    outline: 2px solid #FF6900 !important;
+    outline-offset: 2px !important;
+}
+
+/* Ajustar padding del input cuando hay botón de toggle */
+.position-relative .form-control {
+    padding-right: 38px !important;
+    padding-left: 12px !important;
+}
+
+/* Asegurar que el contenedor mantenga su tamaño */
+.form-floating.position-relative {
+    min-height: 48px !important;
+    width: 100% !important;
+    position: relative !important;
+    display: block !important;
+    margin-bottom: 0.25rem;
+}
+
+/* Evitar cambios de layout */
+.form-floating.position-relative .form-control {
+    width: 100% !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+/* Prevenir cualquier cambio de tamaño en labels */
+.form-floating label {
+    color: #DC2626;
+    font-weight: 600;
+    font-size: 0.9rem;
+    position: absolute !important;
+    pointer-events: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Checkbox "Recordarme" */
+.form-check {
+    margin-bottom: 1rem;
+}
+
+.form-check-label {
+    color: #DC2626;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-check-input {
+    border-color: #FFB800;
+    border-width: 2px;
+}
+
+.form-check-input:checked {
+    background-color: #FF6900;
+    border-color: #FF6900;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 105, 0, 0.25);
+}
+
+/* Alertas con temática Popeyes */
+.alert {
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #FEF2F2 0%, #FECACA 100%);
+    color: #DC2626;
+    border-left: 4px solid #DC2626;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%);
+    color: #059669;
+    border-left: 4px solid #059669;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%);
+    color: #D97706;
+    border-left: 4px solid #FFB800;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    color: #2563EB;
+    border-left: 4px solid #FF6900;
+}
+
+/* Feedback de validación */
+.invalid-feedback {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    display: block;
+    min-height: 1.2rem;
+}
+
+.form-control.is-invalid {
+    border-color: #DC2626;
+    box-shadow: 0 0 0 0.25rem rgba(220, 38, 38, 0.25);
+    color: #1a1a1a !important;
+}
+
+.form-control.is-valid {
+    border-color: #059669;
+    box-shadow: 0 0 0 0.25rem rgba(5, 150, 105, 0.25);
+    color: #1a1a1a !important;
+}
+
+/* Forzar color de texto negro en todos los estados */
+input.form-control,
+input.form-control:focus,
+input.form-control:active,
+input.form-control:hover {
+    color: #1a1a1a !important;
+}
+
+/* Asegurar contraste en modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .form-control {
+        color: #1a1a1a !important;
+        background-color: #FEFEFE !important;
+    }
+    
+    .form-control:focus {
+        color: #1a1a1a !important;
+        background-color: #FFFFFF !important;
+    }
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 105, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+}
+
+.loading-overlay .spinner-border {
+    width: 3.5rem;
+    height: 3.5rem;
+    color: #FFFFFF;
+    border-width: 0.3em;
+}
+
+/* Footer */
+.login-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-footer small {
+    color: #DC2626;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Animaciones */
+.card-login {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.logo-container {
+    animation: fadeIn 1s ease-out 0.3s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animación de pulso para el botón */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 105, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 105, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 105, 0, 0);
+    }
+}
+
+.btn-login:focus {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .container-tight {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .card-login {
+        margin: 1rem;
+        max-width: none;
+    }
+    
+    .login-title {
+        font-size: 1.5rem;
+    }
+    
+    .logo-container {
+        margin-bottom: 1.25rem;
+    }
+    
+    .logo-container img {
+        height: 45px;
+    }
+    
+    .btn-login {
+        height: 48px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Estados de hover para elementos interactivos */
+.form-control:hover:not(:focus) {
+    border-color: #FF6900;
+    transform: translateY(-1px);
+}
+
+.form-check-input:hover {
+    border-color: #FF6900;
+    transform: scale(1.05);
+}
+
+/* Mejoras de accesibilidad con colores Popeyes */
+.form-control:focus,
+.btn:focus,
+.form-check-input:focus {
+    outline: 3px solid #FFB800;
+    outline-offset: 2px;
+}
+
+/* Indicador de campo requerido */
+.form-floating label::after {
+    content: " *";
+    color: #DC2626;
+    font-weight: bold;
+}
+
+/* Efectos adicionales */
+.card-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradiente alternativo para inputs en focus */
+.form-floating .form-control:focus {
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFF7ED 100%);
+}
+
+/* Animaciones */
+.card-login {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-container {
+    animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .container-tight {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .card-login {
+        margin: 1rem;
+        max-width: none;
+    }
+    
+    .login-title {
+        font-size: 1.25rem;
+    }
+    
+    .logo-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    .logo-container img {
+        height: 50px;
+    }
+}
+
+/* Estados de hover para elementos interactivos */
+.form-control:hover:not(:focus) {
+    border-color: #adb5bd;
+}
+
+.form-check-input:hover {
+    border-color: #206bc4;
+}
+
+/* Estilos para modo oscuro (opcional) */
+@media (prefers-color-scheme: dark) {
+    .card-login {
+        background-color: #1e293b;
+        color: #f1f5f9;
+    }
+    
+    .login-title {
+        color: #f1f5f9;
+    }
+    
+    .login-subtitle {
+        color: #94a3b8;
+    }
+    
+    .form-floating label {
+        color: #94a3b8;
+    }
+    
+    .form-control {
+        background-color: #334155;
+        border-color: #475569;
+        color: #f1f5f9;
+    }
+    
+    .form-control:focus {
+        background-color: #334155;
+        border-color: #206bc4;
+        color: #f1f5f9;
+    }
+}
+
+/* Mejoras de accesibilidad */
+.form-control:focus,
+.btn:focus,
+.form-check-input:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Indicador de campo requerido */
+.form-floating label::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Estilos para pantallas de alta resolución */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    .logo-container img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}

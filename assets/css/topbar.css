@@ -1,0 +1,70 @@
+/* ===== TOPBAR STYLES - FULL WIDTH CONTAINER ===== */
+
+/* Topbar container que ocupa todo el ancho del contenedor padre */
+#topbar-container {
+    position: relative;
+    width: 100%;
+    z-index: 1030;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Navbar basic styling */
+header.navbar {
+    position: relative;
+    background-color: #ffffff;
+    border-bottom: none; /* Ya está en el container */
+    margin-bottom: 0;
+    padding: 0.5rem 0; /* Sin padding lateral para ocupar todo el ancho */
+    width: 100%;
+}
+
+/* Container del navbar para el contenido interno */
+header.navbar .container-xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Navbar title */
+.navbar-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+/* Avatar in navbar */
+.navbar .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #6c757d;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Profile dropdown */
+.navbar .nav-link {
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header.navbar {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .navbar-title {
+        font-size: 0.9rem;
+    }
+    
+    .navbar .avatar {
+        width: 28px;
+        height: 28px;
+    }
+}

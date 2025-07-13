@@ -4,7 +4,7 @@
 class ComponentLoader {
     constructor() {
         this.components = new Map();
-        this.baseComponentPath = '../../assets/components/';
+        this.baseComponentPath = '../assets/components/';
     }
 
     /**
